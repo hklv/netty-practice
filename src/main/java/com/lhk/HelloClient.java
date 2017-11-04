@@ -22,7 +22,9 @@ public class HelloClient {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
-            b.group(group).channel(NioSocketChannel.class).handler(new HelloServerInitializer());
+            b.group(group)
+                    .channel(NioSocketChannel.class)
+                    .handler(new HelloClientInitializer());
             Channel ch = b.connect(host, port).sync().channel();
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             for (; ; ) {
@@ -30,7 +32,7 @@ public class HelloClient {
                 if (line == null) {
                     continue;
                 }
-                ch.writeAndFlush(line + "\r\n");
+                ch.writeAndFlush(line + "\n");
             }
         } finally {
             group.shutdownGracefully();

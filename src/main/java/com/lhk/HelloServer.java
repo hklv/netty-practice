@@ -21,6 +21,7 @@ public class HelloServer {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup);
             b.channel(NioServerSocketChannel.class);
+            b.childHandler(new HelloServerInitializer());
             ChannelFuture f = b.bind(port).sync();
             f.channel().closeFuture().sync();
         } finally {
